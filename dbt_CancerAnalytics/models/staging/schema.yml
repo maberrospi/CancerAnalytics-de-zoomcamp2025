@@ -1,0 +1,30 @@
+
+version: 2
+
+sources:
+  - name: staging
+    database: "{{ var('my_database') }}"
+    schema: "{{ var('my_schema') }}"
+      # loaded_at_field: record_loaded_at
+    tables:
+      - name: external_cancer_data
+
+models:
+  - name: stg_cancer_data
+    description: >
+      Includes all the cancer (Neoplasms) data extracted from Global Burden of Disease (GBD) betwen 1990 and 2021.
+      The records were generated from the results of the 2021 GBD study.
+      The study includes multiple other causes for death or injury and other estimates defined by the study.
+      This model includes only the Neoplasms and measured Deaths, DALYs (Disability-Adjusted Life Years), Prevalence and Incidence numbers.
+      It includes male,female and both sexes for global and countries and territories.
+
+    columns: 
+      - name: record_id
+        description: Primary key for this table, generated with a concatenation of [INSERT HERE]
+        tests:
+            - unique:
+                severity: warn
+            - not_null:
+                severity: warn
+    
+      
