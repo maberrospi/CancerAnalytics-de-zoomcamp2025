@@ -1,0 +1,143 @@
+version: 2
+
+models:
+  - name: fct_cancer_data
+    description: >
+      Cancer metrics corresponding to different cancer types, countries, years, sexes and for specific metrics such as deaths.
+      This table acts as the main table of a star schema and each record is uniquely identified by record_id.
+      record_id is a hash key generated from the ID fields present in the raw table.
+    columns:
+      - name: record_id
+        description: "Unique identifier for each record in the fact table (from source data)."
+        tests:
+          - unique
+          - not_null
+
+      - name: location_id
+        description: "Foreign key linking to the location dimension table."
+        tests:
+          - not_null
+
+      - name: sex_id
+        description: "Foreign key linking to the sex dimension table."
+        tests:
+          - not_null
+
+      - name: cause_id
+        description: "Foreign key linking to the cause dimension table."
+        tests:
+          - not_null
+
+      # - name: metric_id
+      #   description: "Foreign key linking to the metric dimension table."
+      #   tests:
+      #     - not_null
+
+      - name: year_as_date
+        description: "The year for the recorded data."
+        tests:
+          - not_null
+
+      - name: metric_value
+        description: "The measured value for cancer data (e.g., the number of cases, rate, etc.)."
+        tests:
+          - not_null
+
+  - name: dim_location
+    description: "Dimension table for location information"
+    columns:
+      - name: location_id
+        description: "Unique identifier for location"
+        tests:
+          - not_null
+          - unique
+      - name: location_name
+        description: "The name of the location (e.g., Country or Region)"
+        tests:
+          - not_null
+      - name: region
+        description: "Region where the location is situated (e.g., EU, North America)"
+  - name: dim_cause
+    description: "Dimension table for causes of death or illness"
+    columns:
+      - name: cause_id
+        description: "Unique identifier for the cause"
+        tests:
+          - not_null
+          - unique
+      - name: cause_name
+        description: "The name of the cause (e.g., Breast cancer, Kidney cancer etc.)"
+        tests:
+          - not_null
+      # - name: cause_group
+      #   description: "Group of the cause (e.g., infectious diseases, non-communicable diseases)"
+  - name: dim_sex
+    description: "Dimension table for gender information"
+    columns:
+      - name: sex_id
+        description: "Unique identifier for sex (Male, Female, etc.)"
+        tests:
+          - not_null
+          - unique
+      - name: sex_name
+        description: "The name of the sex (Male, Female, Both)"
+        tests:
+          - not_null
+
+  - name: dim_measure
+    description: "Dimension table for the measure types"
+    columns:
+      - name: measure_id
+        description: "Unique identifier for the measure types"
+        tests:
+          - not_null
+          - unique
+      - name: measure_name
+        description: "The name of the measure type (Deaths,DALYs etc.)"
+  - name:  fct_cancer_agg_sdi
+    description: "Fact table of aggregated metrics by SDIs"
+    columns:
+      - name: year_as_date
+        description: "Year of given metrics as date format"
+        tests:
+          - not_null
+      - name: measure_name
+        description: "The name of the measure type (Deaths,DALYs etc.)"
+      - name: location_name
+        description: "The name of the location (e.g., Country or Region)"
+        tests:
+          - not_null
+      - name: Total_Number
+        description: "Sum of metric for location,measure and year"
+      - name: Percentage
+        description: "Percentage of metric based on the total for measure and year"
+  - name: fct_cancer_by_region
+    description: "Fact table of aggregated metrics by Region"
+    columns:
+      - name: year_as_date
+        description: "Year of given metrics as date format"
+      - name: measure_name
+        description: "The name of the measure type (Deaths,DALYs etc.)"
+      - name: region
+        description: "Region where the location is situated (e.g., EU, North America)"
+      - name: Total_Number
+        description: "Sum of metric for region,measure and year"
+      - name: Percentage
+        description: "Percentage of metric based on the total for measure and year"
+  - name: fct_cancer_with_percent
+    description: "Fact table with the inclusion of Percentage of a metric  with respect to year, measure, location and sex"
+    columns:
+      - name: year_as_date
+        description: "Year of given metrics as date format"
+      - name: measure_name
+        description: "The name of the measure type (Deaths,DALYs etc.)"
+      - name: location_name
+        description: "The name of the location (e.g., Country or Region)"
+      - name: sex_name
+        description: "The name of the sex (Male, Female, Both)"
+      - name: cause_name
+        description: "The name of the cause (e.g., Breast cancer, Kidney cancer etc.)"
+      - name: Number
+        description: "The measured value for cancer data (e.g., the number of cases, rate, etc.). Synonimous to metric_value"
+      - name: Percentage
+        description: "Percentage of metric based on the total for measure, year, location and sex"

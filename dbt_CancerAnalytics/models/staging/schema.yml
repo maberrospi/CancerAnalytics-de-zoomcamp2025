@@ -5,9 +5,8 @@ sources:
   - name: staging
     database: "{{ var('my_database') }}"
     schema: "{{ var('my_schema') }}"
-      # loaded_at_field: record_loaded_at
     tables:
-      - name: external_cancer_data
+      - name: raw_cancer_data
 
 models:
   - name: stg_cancer_data
@@ -26,5 +25,80 @@ models:
                 severity: warn
             - not_null:
                 severity: warn
-    
-      
+      - name: measure_id
+        description: >
+          The id for the measure_name
+            1=Deaths
+            2=DALYs
+            5=Prevalence
+            6=Incidence
+      - name: measure_name
+        description: Measure names include Death, DALYs, Incidence and Prevalence
+      - name: location_id
+        description: The id of the country for the record measurements ~205 countries.
+      - name: location_name
+        description: The country name for the record measurements
+      - name: sex_id
+        description: >
+          The id for sex
+            1=Male
+            2=Female
+            3=Both
+      - name: sex_name
+        description: Female, Male or Both
+        tests: 
+          - accepted_values:
+              values: "{{ var('sex_name_types') }}"
+              severity: warn
+              # quote: false
+      - name: cause_id
+        description: >
+          The id for the cause_name
+            429=Breast cancer
+            484=Hodgkin lymphoma
+            447=Nasopharynx cancer
+            462=Non-melanoma skin cancer
+            489=Other malignant neoplasms
+            1011=Soft tissue and other extraosseous sarcomas
+            414=Stomach cancer
+            1008=Eye cancer
+            471=Kidney cancer
+            483=Mesothelioma
+            450=Other pharynx cancer
+            487=Leukemia
+            417=Liver cancer
+            486=Multiple myeloma
+            485=Non-Hodgkin lymphoma
+            456=Pancreatic cancer
+            468=Testicular cancer
+            426=Tracheal, bronchus, and lung cancer
+            441=Colon and rectum cancer
+            459=Malignant skin melanoma
+            1013=Neuroblastoma and other peripheral nervous cell tumors
+            490=Other neoplasms
+            438=Prostate cancer
+            474=Bladder cancer
+            411=Esophageal cancer
+            423=Larynx cancer
+            453=Gallbladder and biliary tract cancer
+            480=Thyroid cancer
+            444=Lip and oral cavity cancer
+            477=Brain and central nervous system cancer
+            1012=Malignant neoplasm of bone and articular cartilage
+            432=Cervical cancer
+            465=Ovarian cancer
+            435=Uterine cancer
+      - name: cause_name
+        description: A single disease or injury or an aggregation of diseases and injuries that causes death or disability
+      - name: metric_id
+        description: > 
+          The id for the metric_name
+            1=Number
+            2=Percentage
+            ...
+      - name: metric_name
+        description: Metric names is currently only numbers
+      - name: year
+        description: The year for the record measurements
+      - name: val
+        description: The value of the metric_name related to the measure_name
