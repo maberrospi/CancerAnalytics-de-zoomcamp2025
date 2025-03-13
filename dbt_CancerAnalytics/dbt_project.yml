@@ -36,8 +36,13 @@ models:
       +materialized: view
     core:
       # Core models will usually be querried by BI Tools so use tables for faster experience
-      +materliazed: tables
+      +materialized: table
 
 vars:
   my_database: "zoomcamp-project-cancer"
   my_schema: "GBD_2021_cancer"
+  measure_name_types: ['Death', 'DALYs (Disability-Adjusted Life Years)', 'Incidence', 'Prevalence']
+  sex_name_types: ['Male', 'Female', 'Both']
+
+seeds:
+  locations_regions:
