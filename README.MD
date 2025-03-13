@@ -33,15 +33,15 @@ The report generated in Google Looker Studio consists of three pages. Each page 
 
 The first dashboard presents a visualization of the distribution of a specific measure (e.g. Deaths) for a given year on a region level. For the remaining examples I will refer to the measure as Deaths for simplicity. The graph on the bottom presents the number of deaths over time for chosen locations, sex and cancer type. There is also an option to view the percentage value instead of the number by hovering over the graph.
 
-[Dashboard1](/images/Dash1.gif)
+![Dashboard1](/images/Dash1.gif)
 
 The second dashboard has similar visualizations. The upper graph represents the distribution of deaths for a given year based on the Sociodemographic Index (SDI). For reference, SDI is a measure that identifies where countries or other geographic areas sit on the spectrum of development. It is expressed on a scale of 0 to 100, with 0 being the lowest SDI value and 100 being the highest. The lower graph presents the number of deaths for the distinct SDIs over time.
 
-[Dashboard1](/images/Dash2.gif)
+![Dashboard1](/images/Dash2.gif)
 
 The third and finall dashboard highlights the top 10 cancer types for a chosen country and sex over time. While these are somewhat simple models and visualizations, this project highlights the importance of data and data engineering and how data analytics enables us to answer questions and solve problems.
 
-[Dashboard1](/images/Dash3.gif)
+![Dashboard1](/images/Dash3.gif)
 
 ## Steps to reproduce 
 
