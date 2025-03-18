@@ -18,4 +18,4 @@ Lastly, the core layer includes three models which were used for the visualizati
 > While the amount of data may not be enough for queries to benefit from partitioning and clustering, these were maintained as part of understanding these optimization processes and employing best practices.
 
 > [!Tip]
-> It is important to nota that the staging, fact and dimensional models are not incremental. This means the tables will be rebuilt every time we run the models. If we plan to ingest data in specific intervals (e.g. each day) then these models should use the 'Incremental' table configuration. For the purpose of this project using a table configuration is enough.
+> It is important to note that the staging, fact and dimensional models are not incremental. This means the tables will be rebuilt every time we run the models. If we plan to ingest data in specific intervals (e.g. each day) then these models should use the 'Incremental' table configuration. For the purpose of this project using a table configuration is enough.
