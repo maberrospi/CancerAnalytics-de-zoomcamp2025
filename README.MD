@@ -45,6 +45,10 @@ The third and finall dashboard highlights the top 10 cancer types for a chosen c
 
 ## Steps to reproduce 
 
+> [!IMPORTANT]
+> Modify the variables appropriately for GCP Project ID, BigQuery Bucket and Dataset names, GCP location and GCP credentials wherever applicable, to reflect your own project, infrastructure and credentials.
+
+
 ### Step 1 - Create project in GCP
 
 1. Create a service account with Storage Admin and BigQuery Admin permissions
@@ -61,9 +65,9 @@ The third and finall dashboard highlights the top 10 cancer types for a chosen c
 
 ### Step 3 - Prepare ingestion data
 
-1. Option 1: Register in the GBD website and download data from the results tool. Make sure to filter the data so that
+* Option 1: Register in the GBD website and download data from the results tool. Make sure to filter the data so that
     1. Download cancer data (Neoplasms) as Cause, choose 'all countries and teritorries' as location, All ages, choose all the sexes, all the years, set metric as Number and finally choose Deaths, DALYs, Incidence and Prevalence as Measures.
-2. Option 2: Alternatively, a single zipped CSV file with some data is provided in [ExData](/ExData/) as an easier way to get it up and running. Note that this method will result in less data that what was used and perhaps unexpected behavior later on.
+* Option 2: Alternatively, a single zipped CSV file with some data is provided in [ExData](/ExData/) as an easier way to get it up and running. Note that this method will result in less data that what was used and perhaps unexpected behavior later on.
 
 
 ### Step 4 - Setup Kestra and Ingest
@@ -76,15 +80,21 @@ The third and finall dashboard highlights the top 10 cancer types for a chosen c
 	1. Flow adds KV pairs for Dataset name, Project ID, Bucket name and GCP location. GCP Credentials can be added manually using the Kestra UI.
 3. Run the ingestion flow
 	1. Includes unzipping the folders and uploading the csv files to the GCS bucket and to a BigQuery table.
-	2. Note: The 'in_file' and 'out_file' should be changed appropriately to point to the correct data. The files shoudl be located in the 'Data' directory since it is the Volume connecting the data to the docker container. 
+	2. Note: The 'in_file' and 'out_file' should be changed appropriately to point to the correct data. The files should be located in the 'Data' directory since it is the Volume connecting the data to the docker container. 
 
 
-### Step 5 - Setup dbt core and Build models
+### Step 5 - Build dbt models
 
-1. Follow the [dbt guide](https://docs.getdbt.com/guides/manual-install?step=1) to install and setup dbt core.
-    1. Note: This includes creating a virtual environment where dbt core is installed as well as connecting to BigQuery.
-2. Use `dbt build` to run the rest of the models.
-3. The new tables should be created in BigQuery.
+* Option 1 - Run Kestra dbt flow (Recommended):
+	1. Run the `dbt_build_all.yaml` flow within the Kestra UI.
+
+* Option 2 - Setup dbt core and Build models:
+	1. Follow the [dbt guide](https://docs.getdbt.com/guides/manual-install?step=1) to install and setup dbt core.
+		1. Note: This includes creating a virtual environment where dbt core is installed as well as connecting to BigQuery.
+	2. Use `dbt build` to run the rest of the models.
+
+The new tables should be created in BigQuery.
+
 
 
 ## Future improvements
