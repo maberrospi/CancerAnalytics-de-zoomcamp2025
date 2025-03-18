@@ -2,7 +2,7 @@
 
 ![DbtLineage](/images/dbt_diagram.png)
 
-> [!Info]
+> [!Tip]
 > Information about the models can also be viewed using dbt docs. To generate docs run `dbt docs generate` followed by `dbt docs serve`. This is possible through the dbt core CLI.
 
 The transformations are divided in two layers, staging and core. The staging layer includes two resources. The `stg_cancer_data` table which is generated from the raw data and contains the necessary fields for later analysis as well as a `locations_regions` seed table which maps the countries/locations to their respective region. The layer schemas contain additional information of each model in the model description. 
